@@ -1,0 +1,17 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.11.0
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:hoek:20180212':
+    - tus-node-server > @google-cloud/storage > gcs-resumable-upload > google-auto-auth > gcp-metadata > retry-request > request > hawk > boom > hoek:
+        patched: '2018-07-16T21:39:24.829Z'
+    - tus-node-server > @google-cloud/storage > gcs-resumable-upload > google-auto-auth > gcp-metadata > retry-request > request > hawk > sntp > hoek:
+        patched: '2018-07-16T21:39:24.829Z'
+    - tus-node-server > @google-cloud/storage > gcs-resumable-upload > google-auto-auth > gcp-metadata > retry-request > request > hawk > cryptiles > boom > hoek:
+        patched: '2018-07-16T21:39:24.829Z'
+    - tus-node-server > @google-cloud/storage > gcs-resumable-upload > google-auto-auth > gcp-metadata > retry-request > request > hawk > hoek:
+        patched: '2018-07-16T21:39:24.829Z'
+  'npm:tunnel-agent:20170305':
+    - tus-node-server > @google-cloud/storage > gcs-resumable-upload > google-auto-auth > gcp-metadata > retry-request > request > tunnel-agent:
+        patched: '2018-07-16T21:39:24.829Z'
