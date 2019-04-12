@@ -25,6 +25,28 @@ export default class RemoteUrlWorker extends EventEmitter {
     this.fetch = fetch;
     this.fileCollections = fileCollections;
     this.observeHandles = [];
+    this.isProcessing = false;
+    this.observedEntries = [];
+  }
+
+  async processObserved(collection, stores) {
+    if (this.isProcessing) {
+      return;
+    }
+    this.isProcessing = true;
+
+    for (const doc of this.observedEntries) {
+      await this._handleRemoteURLAdded({ collection, doc, stores }) // eslint-disable-line no-await-in-loop
+        .catch((error) => {
+          console.error(error); // eslint-disable-line no-console
+        });
+    }
+    this.isProcessing = false;
+  }
+
+  pushObservedDoc(doc, collection, stores) {
+    this.observedEntries.push(doc);
+    this.processObserved(collection, stores);
   }
 
   start() {
@@ -36,10 +58,7 @@ export default class RemoteUrlWorker extends EventEmitter {
         "original.remoteURL": { $ne: null }
       }).observe({
         added: (doc) => {
-          this._handleRemoteURLAdded({ collection, doc, stores })
-            .catch((error) => {
-              console.error(error); // eslint-disable-line no-console
-            });
+          this.pushObservedDoc(doc, collection, stores);
         }
       }));
     });
