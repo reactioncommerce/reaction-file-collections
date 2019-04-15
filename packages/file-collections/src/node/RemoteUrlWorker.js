@@ -19,10 +19,11 @@ function forEachPromise(items, fn) {
 }
 
 export default class RemoteUrlWorker extends EventEmitter {
-  constructor({ fetch, fileCollections = [] } = {}) {
+  constructor({ fetch, fileCollections = [], appEvents } = {}) {
     super();
 
     this.fetch = fetch;
+    this.appEvents = appEvents;
     this.fileCollections = fileCollections;
     this.observeHandles = [];
   }
@@ -53,7 +54,7 @@ export default class RemoteUrlWorker extends EventEmitter {
   }
 
   async _handleRemoteURLAdded({ collection, doc, stores }) {
-    const { fetch } = this;
+    const { fetch, appEvents } = this;
     const { remoteURL } = doc.original;
 
     const fileRecord = new FileRecord(doc, { collection });
@@ -95,5 +96,10 @@ export default class RemoteUrlWorker extends EventEmitter {
     await collection.update(doc._id, { $unset: { "original.remoteURL": "" } }, { raw: true });
 
     debug(`RemoteUrlWorker: remoteURL prop removed for ${loggingIdentifier}`);
+
+    if (appEvents) {
+      const { metadata: { productId, variantId } } = doc;
+      appEvents.emit("afterMediaFromRemoteURLStored", doc._id, { productId, variantId });
+    }
   }
 }
