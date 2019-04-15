@@ -27,21 +27,34 @@ export default class RemoteUrlWorker extends EventEmitter {
     this.observeHandles = [];
     this.isProcessing = false;
     this.observedEntries = [];
+    this.processObserved = this.processObserved.bind(this);
   }
 
   async processObserved(collection, stores) {
+    debug("processObserved called");
     if (this.isProcessing) {
+      debug("Queue is already processing, return");
       return;
     }
     this.isProcessing = true;
 
-    for (const doc of this.observedEntries) {
-      await this._handleRemoteURLAdded({ collection, doc, stores }) // eslint-disable-line no-await-in-loop
+    const doc = this.observedEntries.shift();
+
+    if (doc) {
+      debug("There is another doc in the queue");
+      await this._handleRemoteURLAdded({ collection, doc, stores })
         .catch((error) => {
           console.error(error); // eslint-disable-line no-console
         });
+    } else {
+      debug("There is no doc in the queue");
     }
     this.isProcessing = false;
+    if (this.observedEntries.length) {
+      debug(`There are ${this.observedEntries.length} more docs in the queue, starting new execution`);
+      return this.processObserved(collection, stores);
+    }
+    debug("processObserved queue finished");
   }
 
   pushObservedDoc(doc, collection, stores) {
