@@ -97,6 +97,10 @@ const Images = new MongoFileCollection("Images", {
 });
 
 Meteor.methods({
+  insertImage(fileRecord) {
+    check(fileRecord, Object);
+    return ImagesCollection.insert(fileRecord);
+  },
   insertRemoteImage(url) {
     check(url, String);
     const fileRecord = Promise.await(FileRecord.fromUrl(url, { fetch }));
