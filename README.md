@@ -20,6 +20,7 @@ Reaction FileCollections is a set of NPM packages that provide the ability to su
 - [Upload a File Chosen By User](#upload-a-file-chosen-by-user)
 - [Store a File From a Remote URL](#store-a-file-from-a-remote-url)
 - [Making Your Own Storage Adapter](#making-your-own-storage-adapter)
+  - [S3 Storage](#s3-storage)
 - [Debugging](#debugging)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -436,6 +437,10 @@ To make a storage adapter package:
 - Export your class as the default package export.
 
 Refer to the `GridFSStore` class definition as a model.
+
+### S3 Storage
+If you're looking to implement S3 storage, you may use [this](https://github.com/outgrow/reaction-file-collections-sa-s3) package.
+
 
 ## Debugging
 
