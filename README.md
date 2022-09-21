@@ -1,3 +1,17 @@
+# This repository is deprecated
+
+This code is now located in our monorepo:
+
+[file-collections](https://github.com/reactioncommerce/reaction/tree/trunk/packages/file-collections)
+
+
+[file-collections-sa-base](https://github.com/reactioncommerce/reaction/tree/trunk/packages/file-collections-sa-base)
+
+
+[file-collections-sa-gridfs](https://github.com/reactioncommerce/reaction/tree/trunk/packages/file-collections-sa-gridfs)
+
+
+
 # reaction-file-collections
 
 Reaction FileCollections is a set of NPM packages that provide the ability to support file uploads, storage, and downloads in Node and Meteor apps, and in browser JavaScript. It is based on the no-longer-supported [Meteor-CollectionFS](https://github.com/CollectionFS/Meteor-CollectionFS) project patterns, but greatly simplified and modernized.
