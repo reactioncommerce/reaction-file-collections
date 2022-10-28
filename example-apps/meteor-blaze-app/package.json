@@ -63,7 +63,7 @@
     "query-string": "^5.1.0",
     "sharp": "^0.29.3",
     "tus-js-client": "^1.5.1",
-    "tus-node-server": "~0.3.2"
+    "tus-node-server": "~0.4.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.5",
